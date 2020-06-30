@@ -2,19 +2,82 @@
   "name": "electron-react",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1"
+  "main": "main.js",
+  "homepage": "./",
+  "description": "Electron And React Demo",
+  "author": {
+    "name": "myadmin",
+    "email": "zhou21192345@163.com"
+  },
+  "repository": "https://github.com/myadmin/Electron-React",
+  "build": {
+    "appId": "ElectronReact",
+    "productName": "React拖拽",
+    "copyright": "Copyright @ 2020 ${author}",
+    "files": [
+      "build/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    },
+    "extraMetadata": {
+      "main": "./build/main.js"
+    },
+    "extends": null,
+    "mac": {
+      "category": "Application Category",
+      "artifactName": "${productName}-${version}-${arch}.${ext}"
+    },
+    "dmg": {
+      "background": "assets/appdmg.png",
+      "icon": "assets/icon.icns",
+      "iconSize": 100,
+      "contents": [
+        {
+          "x": 380,
+          "y": 280,
+          "type": "link",
+          "path": "/Applications"
+        },
+        {
+          "x": 110,
+          "y": 280,
+          "type": "file"
+        }
+      ],
+      "window": {
+        "width": 500,
+        "height": 500
+      }
+    },
+    "win": {
+      "target": [
+        "msi",
+        "nsis"
+      ],
+      "icon": "assets/icon.ico",
+      "artifactName": "${productName}-Web-Setup-${version}.${ext}",
+      "publisherName": "Zhang"
+    },
+    "nsis": {
+      "allowToChangeInstallationDirectory": true,
+      "oneClick": false,
+      "perMachine": false
+    }
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "buildMain": "webpack",
+    "dev": "concurrently \"cross-env BROWSER=none yarn start\" \"wait-on http://localhost:3000 && electron .\"",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "prepack": "yarn run build && yarn run buildMain",
+    "predist": "yarn run build && yarn run buildMain"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -30,5 +93,24 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "dependencies": {
+    "array-move": "^2.2.2",
+    "bootstrap": "^4.5.0"
+  },
+  "devDependencies": {
+    "concurrently": "^5.2.0",
+    "cross-env": "^7.0.2",
+    "electron": "^9.0.5",
+    "electron-builder": "^21.2.0",
+    "electron-is-dev": "^1.2.0",
+    "electron-updater": "^4.3.1",
+    "react": "^16.13.1",
+    "react-bootstrap": "^1.0.1",
+    "react-dom": "^16.13.1",
+    "react-scripts": "3.4.1",
+    "react-sortable-hoc": "^1.11.0",
+    "wait-on": "^5.0.1",
+    "webpack-cli": "^3.3.12"
   }
 }
